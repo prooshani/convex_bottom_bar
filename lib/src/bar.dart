@@ -267,10 +267,8 @@ class ConvexAppBar extends StatefulWidget {
     this.curve = Curves.easeInOut,
     this.chipBuilder,
   })  : assert(top == null || top <= 0, 'top should be negative'),
-        assert(initialActiveIndex == null || initialActiveIndex < count,
-            'initial index should < $count'),
-        assert(cornerRadius == null || cornerRadius >= 0,
-            'cornerRadius must >= 0'),
+        assert(initialActiveIndex == null || initialActiveIndex < count, 'initial index should < $count'),
+        assert(cornerRadius == null || cornerRadius >= 0, 'cornerRadius must >= 0'),
         super(key: key);
 
   /// Construct a new appbar with badge.
@@ -295,6 +293,7 @@ class ConvexAppBar extends StatefulWidget {
     Key? key,
     // config for badge
     Color? badgeTextColor,
+    TextStyle? badgeTextStyle,
     Color? badgeColor,
     EdgeInsets? badgePadding,
     EdgeInsets? badgeMargin,
@@ -322,6 +321,7 @@ class ConvexAppBar extends StatefulWidget {
     if (badge.isNotEmpty) {
       chipBuilder = DefaultChipBuilder(
         badge,
+        textStyle: badgeTextStyle ?? TextStyle(color: badgeTextColor, fontSize: 12),
         textColor: badgeTextColor ?? Colors.white,
         badgeColor: badgeColor ?? Colors.redAccent,
         padding: badgePadding ?? EdgeInsets.only(left: 4, right: 4),
@@ -359,8 +359,7 @@ class ConvexAppBar extends StatefulWidget {
 }
 
 /// State of [ConvexAppBar].
-class ConvexAppBarState extends State<ConvexAppBar>
-    with TickerProviderStateMixin {
+class ConvexAppBarState extends State<ConvexAppBar> with TickerProviderStateMixin {
   int? _currentIndex;
   int _warpUnderwayCount = 0;
   Animation<double>? _animation;
@@ -375,11 +374,9 @@ class ConvexAppBarState extends State<ConvexAppBar>
     if (widget.cornerRadius != null && widget.cornerRadius! > 0 && !isFixed()) {
       throw FlutterError.fromParts(<DiagnosticsNode>[
         ErrorSummary('ConvexAppBar is configured with cornerRadius'),
-        ErrorDescription(
-            'Currently the corner only work for fixed style, if you are using '
+        ErrorDescription('Currently the corner only work for fixed style, if you are using '
             'other styles, the convex shape can be broken on the first and last tab item '),
-        ErrorHint(
-            'You should use TabStyle.fixed or TabStyle.fixedCircle to make the'
+        ErrorHint('You should use TabStyle.fixed or TabStyle.fixedCircle to make the'
             ' background display with topLeft/topRight corner'),
       ]);
     }
@@ -388,9 +385,7 @@ class ConvexAppBarState extends State<ConvexAppBar>
   }
 
   void _handleTabControllerAnimationTick() {
-    if (_warpUnderwayCount > 0 ||
-        _controller == null ||
-        !_controller!.indexIsChanging) {
+    if (_warpUnderwayCount > 0 || _controller == null || !_controller!.indexIsChanging) {
       return;
     }
     if (_controller!.index != _currentIndex) {
@@ -423,8 +418,7 @@ class ConvexAppBarState extends State<ConvexAppBar>
     _updateAnimation(
       from: from ?? _currentIndex,
       to: index,
-      duration: Duration(
-          milliseconds: gap < _TRANSITION_DURATION ? 0 : _TRANSITION_DURATION),
+      duration: Duration(milliseconds: gap < _TRANSITION_DURATION ? 0 : _TRANSITION_DURATION),
     );
     // ignore: unawaited_futures
     _animationController?.forward();
@@ -437,9 +431,7 @@ class ConvexAppBarState extends State<ConvexAppBar>
   }
 
   Animation<double> _updateAnimation(
-      {int? from,
-      int? to,
-      Duration duration = const Duration(milliseconds: _TRANSITION_DURATION)}) {
+      {int? from, int? to, Duration duration = const Duration(milliseconds: _TRANSITION_DURATION)}) {
     if (from != null && (from == to) && _animation != null) {
       return _animation!;
     }
@@ -476,11 +468,8 @@ class ConvexAppBarState extends State<ConvexAppBar>
   void _updateTabController() {
     final newController = _takeControllerRef;
     assert(() {
-      if (newController != null &&
-          widget.controller == null &&
-          widget.initialActiveIndex != null) {
-        throw FlutterError(
-            'ConvexAppBar.initialActiveIndex is not allowed when working with TabController.\n'
+      if (newController != null && widget.controller == null && widget.initialActiveIndex != null) {
+        throw FlutterError('ConvexAppBar.initialActiveIndex is not allowed when working with TabController.\n'
             'Please setup through TabController.initialIndex, or disable DefaultTabController by #disableDefaultTabController');
       }
       return true;
@@ -515,8 +504,7 @@ class ConvexAppBarState extends State<ConvexAppBar>
   @override
   void didUpdateWidget(ConvexAppBar oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.controller != oldWidget.controller ||
-        widget.count != oldWidget.count) {
+    if (widget.controller != oldWidget.controller || widget.count != oldWidget.count) {
       _updateTabController();
       _resetState();
     }
@@ -525,16 +513,13 @@ class ConvexAppBarState extends State<ConvexAppBar>
   @override
   Widget build(BuildContext context) {
     // take care of iPhoneX' safe area at bottom edge
-    final additionalBottomPadding =
-        math.max(MediaQuery.of(context).padding.bottom, 0.0);
+    final additionalBottomPadding = math.max(MediaQuery.of(context).padding.bottom, 0.0);
     final convexIndex = isFixed() ? (widget.count ~/ 2) : _currentIndex;
     final active = isFixed() ? convexIndex == _currentIndex : true;
 
     final height = (widget.height ?? BAR_HEIGHT) + additionalBottomPadding;
     final width = MediaQuery.of(context).size.width;
-    var percent = isFixed()
-        ? const AlwaysStoppedAnimation<double>(0.5)
-        : _animation ?? _updateAnimation();
+    var percent = isFixed() ? const AlwaysStoppedAnimation<double>(0.5) : _animation ?? _updateAnimation();
     var factor = 1 / widget.count;
     var textDirection = Directionality.of(context);
     var dx = convexIndex! / (widget.count - 1);
@@ -655,8 +640,7 @@ class StyleProvider extends InheritedWidget {
   ///
   ///  * [ConvexAppBar]
   ///  * [StyleHook]
-  StyleProvider({Key? key, required this.style, required Widget child})
-      : super(key: key, child: child);
+  StyleProvider({Key? key, required this.style, required Widget child}) : super(key: key, child: child);
 
   /// Get instance of style provider, can be null if you're not providing one.
   static StyleProvider? of(BuildContext context) {

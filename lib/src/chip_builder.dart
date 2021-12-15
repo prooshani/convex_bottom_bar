@@ -27,6 +27,9 @@ class DefaultChipBuilder extends ChipBuilder {
   /// Color of badge text.
   final Color textColor;
 
+  /// Style of badge text.
+  final TextStyle textStyle;
+
   /// Color of the badge chip.
   final Color badgeColor;
 
@@ -43,6 +46,7 @@ class DefaultChipBuilder extends ChipBuilder {
   DefaultChipBuilder(
     this.chips, {
     required this.textColor,
+    required this.textStyle,
     required this.badgeColor,
     required this.padding,
     required this.margin,
@@ -79,7 +83,9 @@ class DefaultChipBuilder extends ChipBuilder {
               color: badgeColor,
               borderRadius: BorderRadius.circular(borderRadius),
             ),
-            child: Text(chip, style: TextStyle(color: textColor, fontSize: 12)),
+
+            /// child: Text(chip, style: TextStyle(color: textColor, fontSize: 12)),
+            child: Text(chip, style: textStyle),
           ),
         ),
       );
@@ -109,8 +115,7 @@ class DefaultChipBuilder extends ChipBuilder {
             margin: margin,
             padding: padding,
             child: Container(
-              decoration:
-                  BoxDecoration(shape: BoxShape.circle, color: badgeColor),
+              decoration: BoxDecoration(shape: BoxShape.circle, color: badgeColor),
               width: 10,
               height: 10,
             ),
