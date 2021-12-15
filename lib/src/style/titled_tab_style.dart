@@ -77,7 +77,7 @@ class TitledTabStyle extends InnerBuilder {
         clipBehavior: Clip.hardEdge,
         alignment: Alignment.center,
         children: <Widget>[
-          Text(item.title ?? '', style: textStyle),
+          item.title ?? Text(''),
           TransitionContainer.slide(
             reverse: true,
             curve: curve,
@@ -97,6 +97,8 @@ class TitledTabStyle extends InnerBuilder {
         ],
       );
     }
-    return Center(child: Text(item.title ?? '', style: textStyle));
+    return Center(
+      child: item.title ?? Text(''),
+    );
   }
 }

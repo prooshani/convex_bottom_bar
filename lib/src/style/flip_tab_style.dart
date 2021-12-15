@@ -50,7 +50,7 @@ class FlipTabStyle extends InnerBuilder {
       ];
       var noLabel = style.hideEmptyLabel && hasNoText(item);
       if (!noLabel) {
-        children.add(Text(item.title ?? '', style: textStyle));
+        children.add(item.title ?? Text(''));
       }
       return TransitionContainer.flip(
         data: index,

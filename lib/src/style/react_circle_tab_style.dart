@@ -75,7 +75,7 @@ class ReactCircleTabStyle extends InnerBuilder {
       ),
     ];
     if (!noLabel) {
-      children.add(Text(item.title ?? '', style: textStyle));
+      children.add(item.title ?? Text(''));
     }
     return Container(
       padding: EdgeInsets.only(bottom: 2),

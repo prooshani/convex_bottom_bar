@@ -53,14 +53,14 @@ class ReactTabStyle extends InnerBuilder {
         ),
       ];
       if (!noLabel) {
-        children.add(Text(item.title ?? '',
-            style: style.textStyle(activeColor, item.fontFamily)));
+        children.add(
+          item.title ?? Text(''),
+        );
       }
       return Container(
         padding: const EdgeInsets.only(bottom: 2),
         child: Column(
-          mainAxisAlignment:
-              noLabel ? MainAxisAlignment.center : MainAxisAlignment.end,
+          mainAxisAlignment: noLabel ? MainAxisAlignment.center : MainAxisAlignment.end,
           children: children,
         ),
       );
@@ -69,14 +69,14 @@ class ReactTabStyle extends InnerBuilder {
       BlendImageIcon(item.icon, color: item.blend ? color : null),
     ];
     if (!noLabel) {
-      children.add(Text(item.title ?? '',
-          style: style.textStyle(color, item.fontFamily)));
+      children.add(
+        item.title ?? Text(''),
+      );
     }
     return Container(
       padding: const EdgeInsets.only(bottom: 2),
       child: Column(
-        mainAxisAlignment:
-            noLabel ? MainAxisAlignment.center : MainAxisAlignment.end,
+        mainAxisAlignment: noLabel ? MainAxisAlignment.center : MainAxisAlignment.end,
         children: children,
       ),
     );

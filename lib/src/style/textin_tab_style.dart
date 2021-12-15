@@ -56,7 +56,7 @@ class TextInTabStyle extends InnerBuilder {
             ),
             TransitionContainer.slide(
               curve: curve,
-              child: Text(item.title ?? '', style: textStyle),
+              child: item.title ?? Text(''),
             ),
           ],
         ),
@@ -64,8 +64,7 @@ class TextInTabStyle extends InnerBuilder {
     }
 
     return Center(
-      child: BlendImageIcon(item.icon,
-          size: style.iconSize, color: item.blend ? color : null),
+      child: BlendImageIcon(item.icon, size: style.iconSize, color: item.blend ? color : null),
     );
   }
 }
