@@ -22,7 +22,7 @@ class TabItem<T> {
   final String? fontFamily;
 
   /// Tab text.
-  final String? title;
+  final Widget? title;
 
   /// IconData or Image.
   ///
@@ -39,11 +39,10 @@ class TabItem<T> {
   /// Create item
   const TabItem({
     this.fontFamily,
-    this.title = '',
+    this.title = const Text(''),
     required this.icon,
     this.activeIcon,
     bool? isIconBlend,
-  })  : assert(icon is IconData || icon is Widget,
-            'TabItem only support IconData and Widget'),
+  })  : assert(icon is IconData || icon is Widget, 'TabItem only support IconData and Widget'),
         blend = isIconBlend ?? (icon is IconData);
 }
